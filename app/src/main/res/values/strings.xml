@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RickAndMortyAPI</string>
+    <string name="aux_img">login_img</string>
+
+</resources>
