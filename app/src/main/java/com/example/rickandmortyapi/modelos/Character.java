@@ -1,6 +1,7 @@
 package com.example.rickandmortyapi.modelos;
 
 public class Character {
+    //objeto character para almacenar los datos obtenidos de la api rest
     int id;
     String name;
     String status;
@@ -10,8 +11,7 @@ public class Character {
     String image;
     boolean favorite;
 
-
-
+    //constructor
     public Character(int id,String name, String status, String species,  String gender, String location, String image) {
         this.id=id;
         this.name = name;
@@ -23,6 +23,7 @@ public class Character {
         favorite=false;
     }
 
+    //getters y setters
     public boolean getFavorite() {
         return favorite;
     }

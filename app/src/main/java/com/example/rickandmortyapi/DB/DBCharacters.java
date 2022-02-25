@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class DBCharacters extends SQLiteOpenHelper {
+    //declaramos los elementos que va a tener la bd
     private static final String DB_NAME = "BD_CHARACTERS";
     private static final String DB_TABLE_NAME = "characters";
     private static final int DB_VERSION = 3;
@@ -22,16 +23,16 @@ public class DBCharacters extends SQLiteOpenHelper {
     private static final String IMAGE_COLUMN = "image";
     private static final String FAVORITE_COLUMN = "favorite";
     private Context mContext;
-    SQLiteDatabase sqlDB;
 
+    //la inicializamos
     public DBCharacters(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         mContext = context;
     }
 
+    //creamos las tablas
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqlDB = sqLiteDatabase;
 
         String CREATE_USER_TABLE = "CREATE TABLE "
                 + DB_TABLE_NAME + "("
@@ -50,12 +51,12 @@ public class DBCharacters extends SQLiteOpenHelper {
         Log("Tablas creadas");
     }
 
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
     public void getVersionDB(){
         Log(Integer.toString(this.getReadableDatabase().getVersion()));
     }
+
+    //metodo para borrar todos los datos
     public void deleteAll(){
         Log("Delete all realisao");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,6 +66,8 @@ public class DBCharacters extends SQLiteOpenHelper {
         db.close();
 
     }
+
+    //metodo para hacer un delete en concreto
     public void delete(int id){
         Log("Delete realisao a id="+id);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -74,6 +77,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         db.close();
     }
 
+    //metodo insert
     public void insert(int id, String name,String status, String species, String gender, String location, String image, Boolean favorite){
         Log("Insert realisao");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -94,6 +98,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         db.close();
     }
 
+    //metodo que devuelve todas las id
     public ArrayList<Integer> getAllid(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Integer> ides = new ArrayList<>();
@@ -112,6 +117,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         return ides;
     }
 
+    //metodo que devuelve todas los nombres
     public ArrayList<String> getAllNames(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> users = new ArrayList<>();
@@ -129,6 +135,8 @@ public class DBCharacters extends SQLiteOpenHelper {
         }
         return users;
     }
+
+    //metodo que devuelve todas los status
     public ArrayList<String> getAllStatus(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> users = new ArrayList<>();
@@ -147,6 +155,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         return users;
     }
 
+    //metodo que devuelve todas las species
     public ArrayList<String> getAllSpecies(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> users = new ArrayList<>();
@@ -165,6 +174,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         return users;
     }
 
+    //metodo que devuelve todas los generos
     public ArrayList<String> getAllGender(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> users = new ArrayList<>();
@@ -181,6 +191,8 @@ public class DBCharacters extends SQLiteOpenHelper {
         }
         return users;
     }
+
+    //metodo que devuelve todas las localizaciones
     public ArrayList<String> getAllLocation(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> users = new ArrayList<>();
@@ -199,6 +211,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         return users;
     }
 
+    //metodo que devuelve todas las url de las imagenes
     public ArrayList<String> getAllImage(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<String> users = new ArrayList<>();
@@ -217,6 +230,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         return users;
     }
 
+    //metodo que devuelve todos si es fav o no
     public ArrayList<Boolean> getAllFavorite(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Boolean> users = new ArrayList<>();
@@ -243,6 +257,7 @@ public class DBCharacters extends SQLiteOpenHelper {
         return users;
     }
 
+    //Escribe en logcat un mensaje que recibe como parametro
     public void Log(String msg){
         Log.d("DBaqui", msg);
     }

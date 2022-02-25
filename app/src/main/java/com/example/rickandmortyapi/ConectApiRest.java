@@ -6,7 +6,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ConectApiRest {
+    //url base para las consultas de la api rest
     private static String baseURL="https://rickandmortyapi.com/api";
+
+    //Metodo que realiza una peticion get a la api rest, se le pide un String que es el final de la url
     public static String getRequest(String strUrl ){
         HttpURLConnection http = null;
         String content = null;
@@ -16,6 +19,7 @@ public class ConectApiRest {
             http.setRequestProperty("Content-Type", "application/json");
             http.setRequestProperty("Accept", "application/json");
 
+            //obtenemos el resultado de la petición, aceptando solo json ya que es el recurso que devuelve y nos interesa.
             if( http.getResponseCode() == HttpURLConnection.HTTP_OK ) {
                 StringBuilder sb = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream()));
@@ -23,6 +27,7 @@ public class ConectApiRest {
                 while ((line = reader.readLine()) != null) {
                     sb.append(line);
                 }
+                //devolvemos el json obtenido en forma de string
                 content = sb.toString();
                 reader.close();
             }

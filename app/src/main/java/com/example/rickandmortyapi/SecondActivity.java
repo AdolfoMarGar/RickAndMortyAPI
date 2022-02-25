@@ -1,31 +1,26 @@
 package com.example.rickandmortyapi;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.rickandmortyapi.DB.DBCharacters;
 import com.example.rickandmortyapi.modelos.Character;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
 public class SecondActivity extends AppCompatActivity implements AdaptadorListenerPosition {
+    //declaramos todo lo necesario
     DBCharacters DBChar;
 
     String urlCharacters="/character";
@@ -39,6 +34,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
     RecyclerView recyclerView;
     RecyclerAdapter recAdapter;
 
+
     EditText txtId;
     EditText txtNombre;
     EditText txtEspecie;
@@ -48,6 +44,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
 
     boolean fav=false;
 
+    //inicializamos la actividad y relacionamos los recursos
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +70,13 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
         txtLoc = findViewById(R.id.txtLocation);
     }
 
+    //metodo implementado por interfaz para obtener la pos de un elemento en la recycleview
     @Override
     public void onContactPos(int Id){
         acciones(Id);
     }
 
-
+    //metodo que se ejecuta asincronamente que obtiene los recursos de la bd
     private class taskConnections extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -93,6 +91,8 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
             }
 
         }
+
+        //Una vez obtenido los datos obtenemos los datos que queremos del json fijandonos en la estructura de la api
         @Override
         protected void onPostExecute(String s) {
             try {
@@ -110,6 +110,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
                                 jsonLocation.getString("name"),
                                 jsonArray.getJSONObject(j).getString("image")
                         );
+                        //añadimos cara personaje a la lista
                         listaCharacters.add(auxChar);
                     }
                     recAdapter.notifyDataSetChanged();
@@ -123,10 +124,12 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
         }
     }
 
+    //metodo toast para ahorrar lineas
     public void Toast(String msg){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    //metodo del boton acciones para hacer un personaje si o no favorito o rellenar los EditText con datos
     public void acciones(int pos) {
         final CharSequence [] opciones={"Fav : SI","Fav : NO","Rellenar"};
         final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(SecondActivity.this);
@@ -165,6 +168,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
 
     }
 
+    //metodo que guarda en la bd todos los personajes
     public void guardar(View view) {
         Toast("Guardando datos");
         DBChar.deleteAll();
@@ -173,6 +177,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
         }
     }
 
+    //metodo que añade a la bd, arraylist y recycleview un personaje
     public void anadir(View view) {
         try{
             int idAux = Integer.parseInt(txtId.getText().toString());
@@ -210,6 +215,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
 
     }
 
+    //metodo que modifica en la bd, arraylist y recycleview un personaje
     public void modificar(View view) {
         try{
             int idAux = Integer.parseInt(txtId.getText().toString());
@@ -254,6 +260,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
         }
     }
 
+    //metodo que borra de la bd, arraylist y recycleview un personaje
     public void borrar(View view) {
         try{
             int idAux = Integer.parseInt(txtId.getText().toString());
@@ -282,6 +289,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
 
     }
 
+    //metodo que obtiene los personajes guardados en la bd y los carga
     public void cargar (View view){
         fav=false;
         Toast("Cargando datos");
@@ -302,9 +310,6 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
         locationes = DBChar.getAllLocation();
         imagenes = DBChar.getAllImage();
         favorites = DBChar.getAllFavorite();
-        for(Boolean b : favorites){
-            System.out.println(b);
-        }
 
         DBlistaCharacters.clear();
         for(int i=0;i<ides.size();i++){
@@ -332,6 +337,7 @@ public class SecondActivity extends AppCompatActivity implements AdaptadorListen
 
     }
 
+    //metodo que visualiza los personajes favoritos
     public void favoritos(View view){
         if(!fav){
             if(!listaCharactersFav.isEmpty()){

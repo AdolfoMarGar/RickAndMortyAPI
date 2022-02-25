@@ -1,14 +1,17 @@
-package com.example.rickandmortyapi;
+package com.example.rickandmortyapi.modelos;
 
 public class Usuario {
+    //Objeto usuario
     String usu;
     String pass;
 
+    //constructor
     public Usuario(String usu, String pass) {
         this.usu = usu;
         this.pass = pass;
     }
 
+    //getters y setters
     public String getUsu() {
         return usu;
     }
